@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="首页" android:icon="@drawable/shape_bottom_icon_main" android:id="@+id/menu_main"/>
+    <item android:title="项目" android:icon="@drawable/shape_bottom_icon_manger" android:id="@+id/menu_managger"/>
+    <item android:title="公众号" android:icon="@drawable/shape_bottom_icon_account" android:id="@+id/menu_account"/>
+    <item android:title="我的" android:icon="@drawable/shape_bottom_icon_my" android:id="@+id/menu_my"/>
+</menu>

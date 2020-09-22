@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MyWanAndroid</string>
+    <string name="error_happen_current">发生错误</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_title_content">首页</string>
 </resources>
