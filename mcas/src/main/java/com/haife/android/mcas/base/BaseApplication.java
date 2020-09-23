@@ -44,8 +44,9 @@ public class BaseApplication extends Application implements App {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        if (mAppDelegate == null)
+        if (mAppDelegate == null) {
             this.mAppDelegate = new AppDelegate(base);
+        }
         this.mAppDelegate.attachBaseContext(base);
     }
 
@@ -53,8 +54,10 @@ public class BaseApplication extends Application implements App {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        if (mAppDelegate != null)
+        if (mAppDelegate != null) {
             this.mAppDelegate.onCreate(this);
+        }
+
     }
 
     /**
