@@ -90,5 +90,7 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     implementation rootProject.ext.dependencies["base-recyclerview-adapter"]
     implementation 'com.alibaba:fastjson:1.2.48'
+    //点赞按钮库
+    implementation 'com.sackcentury:shinebutton:1.0.0'
 
 }

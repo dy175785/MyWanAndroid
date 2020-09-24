@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dy.mywanandroid.mvp.http.entity.base.BaseResponse;
+import com.dy.mywanandroid.utils.AppHelper;
 import com.haife.android.mcas.http.GlobalHttpHandler;
 
 import okhttp3.Interceptor;
@@ -66,8 +67,15 @@ public class GlobalHttpHandleImpl implements GlobalHttpHandler {
     @Override
     public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
         //存放token 把token当头部发送过去
-        String token = "";//SPUtils.getInstance().getString(SPParam.SP_LOGIN_TOKEN)
-        return chain.request().newBuilder().addHeader("Cookie", token).build();
+        String name = SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME);
+        String pwd = SPUtils.getInstance().getString(AppHelper.LOGIN_USER_PASSWORD);
+        String nameToken = "";
+        String pwdToken = "";
+        if (!TextUtils.isEmpty(name)){
+            nameToken = AppHelper.LOGIN_USER_NAME_COOKIE+name;
+            pwdToken = AppHelper.LOGIN_USER_PASSWORD_COOKIE+pwd;
+        }
+        return chain.request().newBuilder().addHeader("Cookie", nameToken).addHeader("Cookie", pwdToken).build();
 
     }
 }

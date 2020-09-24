@@ -36,32 +36,43 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_main_time"/>
     </RelativeLayout>
-    <TextView
-        android:lineSpacingExtra="@dimen/dp_10"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_main_cntent" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:lineSpacingExtra="@dimen/dp_10"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_main_cntent" />
+        <ImageView
+            android:layout_toRightOf="@+id/tv_main_cntent"
+            android:id="@+id/iv_project"
+            android:layout_centerVertical="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="100dp" />
+    </LinearLayout>
+
     <RelativeLayout
+        android:layout_margin="@dimen/dp_10"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp_10">
+        android:layout_height="wrap_content">
         <TextView
             android:layout_centerVertical="true"
             android:textColor="@color/yellow_dd6b55"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_main_type_1"/>
         <com.sackcentury.shinebuttonlib.ShineButton
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_10"
             android:layout_alignParentRight="true"
             android:layout_width="25dp"
             android:layout_height="25dp"

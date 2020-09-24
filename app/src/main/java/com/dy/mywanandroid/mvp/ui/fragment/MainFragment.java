@@ -100,14 +100,11 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
             srlMain.setEnableRefresh(true);
             srlMain.finishLoadMore();
         });
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent();
-                intent.putExtra(AppHelper.MAIN_WEB_DATA, blogList.get(position));
-                intent.setClass(mContext, WebActivity.class);
-                startActivity(intent);
-            }
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            Intent intent = new Intent();
+            intent.putExtra(AppHelper.MAIN_WEB_DATA, blogList.get(position));
+            intent.setClass(mContext, WebActivity.class);
+            startActivity(intent);
         });
     }
 

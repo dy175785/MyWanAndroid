@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimary">#03DAC5</color>
+    <color name="colorPrimaryDark">#03DAC5</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="common_pressed_bg_color">#BEBEBE</color>
     <color name="app_color_edit_hint">#FFCCCCCC</color>
@@ -18,4 +18,5 @@
     <color name="blue_1296db">#1296db</color>
     <color name="white">#ffffffff</color>
     <color name="yellow_dd6b55">#DD6B55</color>
+    <color name="red_EB1C27">#EB1C27</color>
 </resources>

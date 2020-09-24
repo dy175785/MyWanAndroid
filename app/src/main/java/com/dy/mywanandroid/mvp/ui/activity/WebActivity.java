@@ -70,7 +70,7 @@ public class WebActivity extends BaseSupportActivity {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     startActivity(intent);
                 } else {
-                    ToastUtils.showLong("手机上未安装此app");
+                    ToastUtils.showLong("手机上未安装打开此网页的应用");
                 }
                 return true;
             }
