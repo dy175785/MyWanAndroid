@@ -33,7 +33,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvp.ui.activity.WebActivity"></activity>
+        <activity android:name=".mvp.ui.activity.LoginActivity"></activity>
+        <activity android:name=".mvp.ui.activity.RankingActivity" />
+        <activity android:name=".mvp.ui.activity.WebActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

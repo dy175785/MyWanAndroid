@@ -3,6 +3,7 @@ package com.dy.mywanandroid.mvp.ui.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.utils.TextUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dy.mywanandroid.R;
 import com.dy.mywanandroid.app.base.BaseSupportFragment;
@@ -27,6 +31,7 @@ import com.dy.mywanandroid.utils.AppHelper;
 import com.haife.android.mcas.di.component.AppComponent;
 import com.qmuiteam.qmui.widget.QMUICollapsingTopBarLayout;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.sackcentury.shinebuttonlib.ShineButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.indicator.CircleIndicator;
@@ -106,6 +111,36 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
             intent.setClass(mContext, WebActivity.class);
             startActivity(intent);
         });
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.sb_main:
+                        if (TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))){
+                            ((ShineButton)view).setChecked(false);
+                            ToastUtils.showLong(R.string.app_no_login);
+                        }else {
+                            if (((ShineButton)view).isChecked()){
+                                Log.e(TAG, "onCheckedChanged: "+"代码进入第2.2步" );
+                                if (TextUtils.isEmpty(blogList.get(position).getAuthor())){
+                                    Log.e(TAG, "onCheckedChanged: "+"代码进入第3.1步" );
+                                    mPresenter.collectionWithin(blogList.get(position).getId());
+                                }else {
+                                    Log.e(TAG, "onCheckedChanged: "+"代码进入第3.2步" );
+                                    mPresenter.collectionExternal(blogList.get(position).getTitle(),blogList.get(position).getAuthor(),blogList.get(position).getLink());
+                                }
+
+                            }else {
+                                Log.e(TAG, "onCheckedChanged: "+"代码进入第2.1步" );
+                                mPresenter.unCollection(blogList.get(position).getId());
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -147,5 +182,10 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
             blogList.addAll(list.getData().getDatas());
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void registerSuccess() {
+
     }
 }

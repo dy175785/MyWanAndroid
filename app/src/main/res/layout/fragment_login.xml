@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mvp.ui.fragment.LoginFragment"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/shape_login_bg_black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <EditText
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:hint="账号"
+            android:textColorHint="@color/white"
+            android:id="@+id/editTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:inputType="textPassword"
+            android:layout_margin="@dimen/dp_10"
+            android:hint="密码"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:id="@+id/editTextNumberPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:visibility="gone"
+            android:inputType="textPassword"
+            android:layout_margin="@dimen/dp_10"
+            android:hint="请确认新密码"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:id="@+id/editRePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:padding="@dimen/dp_10"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/shape_login_btn_bg"
+                android:id="@+id/btn_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="登录" />
+
+            <Button
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@drawable/shape_login_btn_bg"
+                android:id="@+id/btn_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="注册" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

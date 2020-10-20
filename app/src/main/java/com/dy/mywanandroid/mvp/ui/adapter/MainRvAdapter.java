@@ -40,15 +40,7 @@ public class MainRvAdapter extends BaseQuickAdapter<MainBlogList.DataBean.DatasB
             helper.setText(R.id.tv_main_time,item.getNiceDate());
         }
         helper.setText(R.id.tv_main_cntent,item.getTitle());
-        ShineButton sb =  helper.getView(R.id.sb_main);
 
-        sb.setOnCheckStateChangeListener((view, checked) -> {
-            if (TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))){
-                sb.setChecked(false);
-                ToastUtils.showLong("您还尚未登录，请登录后再操作");
-            }else {
-
-            }
-        });
+        helper.addOnClickListener(R.id.sb_main);
     }
 }

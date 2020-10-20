@@ -1,12 +1,23 @@
 package com.dy.mywanandroid.mvp.http.api.service;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.dy.mywanandroid.mvp.http.entity.base.BaseResponse;
 import com.dy.mywanandroid.mvp.http.entity.result.BannerList;
+import com.dy.mywanandroid.mvp.http.entity.result.IntegralResult;
+import com.dy.mywanandroid.mvp.http.entity.result.LoginResult;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.dy.mywanandroid.mvp.http.entity.result.ProjectDataList;
 import com.dy.mywanandroid.mvp.http.entity.result.ProjectTypeList;
+import com.dy.mywanandroid.mvp.http.entity.result.RankResultt;
+import com.dy.mywanandroid.utils.AppHelper;
+
+import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -62,4 +73,65 @@ public interface CommonService {
      */
     @GET("wxarticle/list/{cid}/{page}/json")
     Observable<MainBlogList> getAccountData(@Path("cid") int cid,@Path("page") int page );
+
+    /**
+     * 获取积分排行榜
+     * @param page
+     * @return
+     */
+    @GET("coin/rank/{page}/json")
+    Observable<RankResultt> getRanking(@Path("page") int page);
+
+    /**
+     * 获取个人积分
+     * @param page
+     * @return
+     */
+    @GET("/lg/coin/list/{page}/json")
+    Observable<IntegralResult> getIntegral(@Path("page") int page);
+
+    /**
+     * 登录
+     * @param username
+     * @param password
+     * @return
+     */
+    @POST("user/login")
+    Observable<LoginResult> login(@Query("username")String username, @Query("password")String password);
+
+    /**
+     * 注册
+     * @param username
+     * @param password
+     * @param repassword
+     * @return
+     */
+    @POST("user/register")
+    Observable<LoginResult> register(@Query("username")String username, @Query("password")String password,@Query("repassword")String repassword);
+
+    /**
+     * 收藏站内文章
+     * @param id
+     * @return
+     */
+    @POST("lg/collect/{id}/json")
+    Observable<BaseResponse> collectionStationBlog(@Path("id") int id, @HeaderMap Map<String,String> map);
+
+    /**
+     * 收藏站外文章
+     * @param title
+     * @param author
+     * @param link
+     * @return
+     */
+    @POST("lg/collect/add/json")
+    Observable<BaseResponse>collectionOutsideBlog(@Query("title")String title,@Query("author")String author,@Query("link")String link,@HeaderMap Map<String,String> map);
+
+    /**
+     * 取消收藏
+     * @param id
+     * @return
+     */
+    @POST("lg/uncollect_originId/{id}/json")
+    Observable<BaseResponse>uncollectionBlog(@Path("id")int id,@HeaderMap Map<String,String> map);
 }

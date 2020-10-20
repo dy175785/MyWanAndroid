@@ -42,7 +42,7 @@ public class ProjectDataAdapter extends BaseQuickAdapter<MainBlogList.DataBean.D
         sb.setOnCheckStateChangeListener((view, checked) -> {
             if (TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))){
                 sb.setChecked(false);
-                ToastUtils.showLong("您还尚未登录，请登录后再操作");
+                ToastUtils.showLong(R.string.app_no_login);
             }else {
 
             }
