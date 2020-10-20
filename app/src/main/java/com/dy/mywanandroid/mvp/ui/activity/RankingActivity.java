@@ -9,12 +9,17 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dy.mywanandroid.R;
 import com.dy.mywanandroid.app.base.BaseSupportActivity;
 import com.dy.mywanandroid.di.component.DaggerMyComponent;
 import com.dy.mywanandroid.mvp.contract.MyContract;
+import com.dy.mywanandroid.mvp.http.entity.base.BaseResponse;
+import com.dy.mywanandroid.mvp.http.entity.result.CollectionResult;
+import com.dy.mywanandroid.mvp.http.entity.result.MyIntegralResult;
 import com.dy.mywanandroid.mvp.http.entity.result.RankResultt;
 import com.dy.mywanandroid.mvp.presenter.MyPresenter;
+import com.dy.mywanandroid.mvp.ui.adapter.CollectionAdapter;
 import com.dy.mywanandroid.mvp.ui.adapter.IntergralItemAdapter;
 import com.dy.mywanandroid.mvp.ui.adapter.RankingItemAdapter;
 import com.dy.mywanandroid.utils.AppHelper;
@@ -42,14 +47,17 @@ public class RankingActivity extends BaseSupportActivity<MyPresenter> implements
     QMUITopBar qtbRanking;
     private List<RankResultt.DataBean.DatasBean> list = new ArrayList<>();
     private int page = 1;
+    private int c_page = 0;
     private RankingItemAdapter adapter;
     private QMUITipDialog qmuiTipDialog ;
     private IntergralItemAdapter adapter1;
     private List<RankResultt.DataBean.DatasBean1> list1 = new ArrayList<>();
+    private List<CollectionResult.DataBean.DatasBean> collLists = new ArrayList<>();
+    private CollectionAdapter collectionAdapter;
     @Override
     public void getRanking(RankResultt resultt) {
         if (resultt != null) {
-            if (page == 0) {
+            if (page == 1) {
                 list.clear();
             }
             if (page != 1 && resultt.getData().getDatas().size() == 0) {
@@ -63,7 +71,7 @@ public class RankingActivity extends BaseSupportActivity<MyPresenter> implements
     @Override
     public void getIntegral(RankResultt resultt) {
         if (resultt != null) {
-            if (page == 0) {
+            if (page == 1) {
                 list.clear();
             }
             if (page != 1 && resultt.getData().getDatas().size() == 0) {
@@ -71,6 +79,30 @@ public class RankingActivity extends BaseSupportActivity<MyPresenter> implements
             }
             list1.addAll(resultt.getData().getDatasBean1s());
             adapter1.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void getMyIntegral(MyIntegralResult result) {
+
+    }
+
+    @Override
+    public void outLogin(BaseResponse response) {
+
+    }
+
+    @Override
+    public void getColl(CollectionResult result) {
+        if (result != null) {
+            if (c_page == 0) {
+                collLists.clear();
+            }
+            if (c_page != 1 && result.getData().getDatas().size() == 0) {
+                c_page--;
+            }
+            collLists.addAll(result.getData().getDatas());
+            collectionAdapter.notifyDataSetChanged();
         }
     }
 
@@ -95,13 +127,14 @@ public class RankingActivity extends BaseSupportActivity<MyPresenter> implements
         Intent intent = getIntent();
         showLoading();
         rvRanking.setLayoutManager(new LinearLayoutManager(this));
+        // TODO: 2020/10/20 我的界面右上角的排行榜
         if (intent.getIntExtra(AppHelper.MY_INTENT_DATA,-1)==0){
             qtbRanking.setTitle("排行榜");
             adapter = new RankingItemAdapter(R.layout.item_ranking_list,list,0);
             mPresenter.getRanking(page);
             adapter.bindToRecyclerView(rvRanking);
             srlRanking.setOnRefreshListener(refreshLayout -> {
-                page = 0;
+                page = 1;
                 srlRanking.setEnableLoadMore(false);
                 mPresenter.getRanking(page);
                 srlRanking.finishRefresh();
@@ -115,25 +148,41 @@ public class RankingActivity extends BaseSupportActivity<MyPresenter> implements
                 srlRanking.setEnableRefresh(true);
             });
         }
-
-        if (intent.getIntExtra(AppHelper.MY_INTENT_DATA,-1)==1){
-            qtbRanking.setTitle("我的积分");
-            adapter1 = new IntergralItemAdapter(R.layout.item_ranking_list,list1,1);
-            mPresenter.getIntegral(page);
-            adapter.bindToRecyclerView(rvRanking);
+        // TODO: 2020/10/20  我的收藏
+        if (intent.getIntExtra(AppHelper.MY_INTENT_DATA,-1)==2){
+            qtbRanking.setTitle("我的收藏");
+            collectionAdapter = new CollectionAdapter(R.layout.item_collection,collLists);
+            mPresenter.getColl(c_page);
+            collectionAdapter.bindToRecyclerView(rvRanking);
             srlRanking.setOnRefreshListener(refreshLayout -> {
-                page = 0;
+                c_page = 0;
                 srlRanking.setEnableLoadMore(false);
-                mPresenter.getIntegral(page);
+                mPresenter.getColl(c_page);
                 srlRanking.finishRefresh();
                 srlRanking.setEnableLoadMore(true);
             });
             srlRanking.setOnLoadMoreListener(refreshLayout -> {
-                page++;
+                c_page++;
                 srlRanking.setEnableRefresh(false);
-                mPresenter.getIntegral(page);
+                mPresenter.getColl(c_page);
                 srlRanking.finishLoadMore();
                 srlRanking.setEnableRefresh(true);
+            });
+            collectionAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                switch (view.getId()){
+                    case R.id.tv_collection_canle:
+                        // TODO: 2020/10/20  取消收藏
+                        mPresenter.unCollection(collLists.get(position).getOriginId());
+                        break;
+                    default:break;
+                }
+            });
+            collectionAdapter.setOnItemClickListener((adapter, view, position) -> {
+                Intent intent1 = new Intent();
+                intent1.putExtra(AppHelper.MAIN_WEB_DATA, collLists.get(position));
+                intent1.putExtra(AppHelper.MAIN_WEB_TYPE,AppHelper.MAIN_WEB_RANK);
+                intent1.setClass(mContext, WebActivity.class);
+                startActivity(intent1);
             });
         }
 

@@ -3,9 +3,11 @@ package com.dy.mywanandroid.mvp.http.api.service;
 import com.blankj.utilcode.util.SPUtils;
 import com.dy.mywanandroid.mvp.http.entity.base.BaseResponse;
 import com.dy.mywanandroid.mvp.http.entity.result.BannerList;
+import com.dy.mywanandroid.mvp.http.entity.result.CollectionResult;
 import com.dy.mywanandroid.mvp.http.entity.result.IntegralResult;
 import com.dy.mywanandroid.mvp.http.entity.result.LoginResult;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
+import com.dy.mywanandroid.mvp.http.entity.result.MyIntegralResult;
 import com.dy.mywanandroid.mvp.http.entity.result.ProjectDataList;
 import com.dy.mywanandroid.mvp.http.entity.result.ProjectTypeList;
 import com.dy.mywanandroid.mvp.http.entity.result.RankResultt;
@@ -15,6 +17,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -115,7 +118,7 @@ public interface CommonService {
      * @return
      */
     @POST("lg/collect/{id}/json")
-    Observable<BaseResponse> collectionStationBlog(@Path("id") int id, @HeaderMap Map<String,String> map);
+    Observable<BaseResponse> collectionStationBlog(@Path("id") int id,@Header("Cookie") String name,@Header("Cookie") String pwd);
 
     /**
      * 收藏站外文章
@@ -125,7 +128,7 @@ public interface CommonService {
      * @return
      */
     @POST("lg/collect/add/json")
-    Observable<BaseResponse>collectionOutsideBlog(@Query("title")String title,@Query("author")String author,@Query("link")String link,@HeaderMap Map<String,String> map);
+    Observable<BaseResponse>collectionOutsideBlog(@Query("title")String title,@Query("author")String author,@Query("link")String link,@Header("Cookie") String name,@Header("Cookie") String pwd);
 
     /**
      * 取消收藏
@@ -133,5 +136,31 @@ public interface CommonService {
      * @return
      */
     @POST("lg/uncollect_originId/{id}/json")
-    Observable<BaseResponse>uncollectionBlog(@Path("id")int id,@HeaderMap Map<String,String> map);
+    Observable<BaseResponse>uncollectionBlog(@Path("id")int id,@Header("Cookie") String name,@Header("Cookie") String pwd);
+
+    /**
+     * 获取个人积分
+     * @return
+     */
+//    @Headers({
+//            "Cookie: loginUserName=",
+//            "Cookie: loginUserPassword=qwe282937"
+//    })
+    @GET("lg/coin/userinfo/json")
+    Observable<MyIntegralResult>getMyIntegral(@Header("Cookie") String name,@Header("Cookie") String pwd);
+
+    /**
+     * 退出登录
+     * @return
+     */
+    @GET("user/logout/json")
+    Observable<BaseResponse> outLogin();
+
+    /**
+     * 获取收藏列表
+     * @param page
+     * @return
+     */
+    @GET("lg/collect/list/{page}/json")
+    Observable<CollectionResult> getColl(@Path("page")int page, @Header("Cookie") String name, @Header("Cookie") String pwd);
 }

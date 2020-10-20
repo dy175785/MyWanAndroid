@@ -121,17 +121,13 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
                             ToastUtils.showLong(R.string.app_no_login);
                         }else {
                             if (((ShineButton)view).isChecked()){
-                                Log.e(TAG, "onCheckedChanged: "+"代码进入第2.2步" );
                                 if (TextUtils.isEmpty(blogList.get(position).getAuthor())){
-                                    Log.e(TAG, "onCheckedChanged: "+"代码进入第3.1步" );
                                     mPresenter.collectionWithin(blogList.get(position).getId());
                                 }else {
-                                    Log.e(TAG, "onCheckedChanged: "+"代码进入第3.2步" );
                                     mPresenter.collectionExternal(blogList.get(position).getTitle(),blogList.get(position).getAuthor(),blogList.get(position).getLink());
                                 }
 
                             }else {
-                                Log.e(TAG, "onCheckedChanged: "+"代码进入第2.1步" );
                                 mPresenter.unCollection(blogList.get(position).getId());
                             }
                         }

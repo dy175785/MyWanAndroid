@@ -10,6 +10,7 @@ import com.haife.android.mcas.mvp.IView;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.http.Header;
 
 /**
  * Administrator
@@ -80,7 +81,7 @@ public interface MianContract {
          * @param id
          * @return
          */
-        Observable<BaseResponse> collection1(int id, Map<String,String> map);
+        Observable<BaseResponse> collection1(int id,  String name, String pwd);
 
         /**
          * 收藏站外文章
@@ -90,7 +91,7 @@ public interface MianContract {
          * @param link
          * @return
          */
-        Observable<BaseResponse> collection2(String title, String author, String link, Map<String,String> map);
+        Observable<BaseResponse> collection2(String title, String author, String link, String name, String pwd);
 
         /**
          * 取消收藏
@@ -98,6 +99,6 @@ public interface MianContract {
          * @param id
          * @return
          */
-        Observable<BaseResponse> uncollection(int id, Map<String,String> map);
+        Observable<BaseResponse> uncollection(int id, String name, String pwd);
     }
 }

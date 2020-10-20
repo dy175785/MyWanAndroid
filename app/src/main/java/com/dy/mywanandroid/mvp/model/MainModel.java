@@ -51,17 +51,17 @@ public class MainModel extends BaseModel implements MianContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse> collection1(int id, Map<String,String> map) {
-        return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).collectionStationBlog(id,map)).flatMap((Function<Observable<BaseResponse>, ObservableSource<BaseResponse>>) baseResponseObservable -> baseResponseObservable);
+    public Observable<BaseResponse> collection1(int id, String name, String pwd) {
+        return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).collectionStationBlog(id,name,pwd)).flatMap((Function<Observable<BaseResponse>, ObservableSource<BaseResponse>>) baseResponseObservable -> baseResponseObservable);
     }
 
     @Override
-    public Observable<BaseResponse> collection2(String title, String author, String link, Map<String,String> map) {
-        return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).collectionOutsideBlog(title, author, link,map)).flatMap((Function<Observable<BaseResponse>, ObservableSource<BaseResponse>>) baseResponseObservable -> baseResponseObservable);
+    public Observable<BaseResponse> collection2(String title, String author, String link, String name, String pwd) {
+        return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).collectionOutsideBlog(title, author, link,name,pwd)).flatMap((Function<Observable<BaseResponse>, ObservableSource<BaseResponse>>) baseResponseObservable -> baseResponseObservable);
     }
 
     @Override
-    public Observable<BaseResponse> uncollection(int id, Map<String,String> map) {
-        return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).uncollectionBlog(id,map)).flatMap((Function<Observable<BaseResponse>, ObservableSource<BaseResponse>>) baseResponseObservable -> baseResponseObservable);
+    public Observable<BaseResponse> uncollection(int id, String name, String pwd) {
+        return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).uncollectionBlog(id,name,pwd)).flatMap((Function<Observable<BaseResponse>, ObservableSource<BaseResponse>>) baseResponseObservable -> baseResponseObservable);
     }
 }

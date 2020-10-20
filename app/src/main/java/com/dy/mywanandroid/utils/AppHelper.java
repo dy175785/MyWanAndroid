@@ -12,6 +12,8 @@ import java.util.Map;
  */
 public class AppHelper {
     public static final String MAIN_WEB_DATA = "main_web_data";
+    public static final String MAIN_WEB_TYPE = "main_web_type";
+    public static final String MAIN_WEB_RANK = "ranking";
     /**
      * 账号密码持久化
      */
@@ -26,5 +28,12 @@ public class AppHelper {
         map.put(LOGIN_USER_NAME_COOKIE, SPUtils.getInstance().getString(LOGIN_USER_USERNAME));
         map.put(LOGIN_USER_PASSWORD_COOKIE,SPUtils.getInstance().getString(LOGIN_USER_PASSWORD));
         return map;
+    }
+
+    public static String getNameCookie(){
+        return LOGIN_USER_NAME_COOKIE+ SPUtils.getInstance().getString(LOGIN_USER_USERNAME);
+    }
+    public static String getPwdCookie(){
+        return LOGIN_USER_PASSWORD_COOKIE+ SPUtils.getInstance().getString(LOGIN_USER_PASSWORD);
     }
 }

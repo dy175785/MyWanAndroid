@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/dp_10"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:background="@drawable/shape_ranking_bg_border"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_collection_title"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LaunchMode启动模式终结篇"/>
+        <TextView
+            android:id="@+id/tv_collection_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收藏时间："
+            android:layout_below="@id/tv_collection_title"
+            android:layout_marginTop="@dimen/dp_10"/>
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/tv_collection_time"
+            android:id="@+id/tv_collection_canle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消收藏"
+            android:layout_below="@id/tv_collection_title"
+            android:layout_marginTop="@dimen/dp_10"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dy.mywanandroid.R;
 import com.dy.mywanandroid.app.base.BaseSupportActivity;
+import com.dy.mywanandroid.mvp.http.entity.result.CollectionResult;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.dy.mywanandroid.utils.AppHelper;
 import com.haife.android.mcas.di.component.AppComponent;
@@ -47,7 +48,7 @@ public class WebActivity extends BaseSupportActivity {
     WebView wvWeb;
     private AlertDialog alertDialog;
     private MainBlogList.DataBean.DatasBean datasBean;
-
+    private CollectionResult.DataBean.DatasBean collBean;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
 
@@ -97,9 +98,15 @@ public class WebActivity extends BaseSupportActivity {
         webSettings.setDisplayZoomControls(true);
         // 设置默认字体大小
         if (getIntent().getSerializableExtra(AppHelper.MAIN_WEB_DATA) != null) {
-            datasBean = (MainBlogList.DataBean.DatasBean) getIntent().getSerializableExtra(AppHelper.MAIN_WEB_DATA);
-            tvTitleWeb.setText(datasBean.getTitle());
-            wvWeb.loadUrl(datasBean.getLink());
+            if (getIntent().getStringExtra(AppHelper.MAIN_WEB_TYPE).equals(AppHelper.MAIN_WEB_RANK)){
+                collBean = (CollectionResult.DataBean.DatasBean) getIntent().getSerializableExtra(AppHelper.MAIN_WEB_DATA);
+                tvTitleWeb.setText(collBean.getTitle());
+                wvWeb.loadUrl(collBean.getLink());
+            }else {
+                datasBean = (MainBlogList.DataBean.DatasBean) getIntent().getSerializableExtra(AppHelper.MAIN_WEB_DATA);
+                tvTitleWeb.setText(datasBean.getTitle());
+                wvWeb.loadUrl(datasBean.getLink());
+            }
             //shouldOverrideUrlLoading(wvWeb,datasBean.getLink());
         }
     }

@@ -132,7 +132,7 @@ public class MainPresenter extends BasePresenter<MianContract.Model, MianContrac
      * @param id
      */
     public void collectionWithin(int id){
-        mModel.collection1(id,AppHelper.getCookie())
+        mModel.collection1(id,AppHelper.getNameCookie(),AppHelper.getPwdCookie())
                 .subscribeOn(Schedulers.io())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .unsubscribeOn(Schedulers.io())
@@ -156,7 +156,7 @@ public class MainPresenter extends BasePresenter<MianContract.Model, MianContrac
      * @param link
      */
     public void collectionExternal(String title,String author,String link){
-        mModel.collection2(title, author, link,AppHelper.getCookie())
+        mModel.collection2(title, author, link,AppHelper.getNameCookie(),AppHelper.getPwdCookie())
                 .subscribeOn(Schedulers.io())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .unsubscribeOn(Schedulers.io())
@@ -164,7 +164,11 @@ public class MainPresenter extends BasePresenter<MianContract.Model, MianContrac
                 .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
                     @Override
                     public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.getErrorCode() == 0){
 
+                        }else {
+
+                        }
                     }
                 });
     }
@@ -174,7 +178,7 @@ public class MainPresenter extends BasePresenter<MianContract.Model, MianContrac
      * @param id
      */
     public void unCollection(int id){
-        mModel.uncollection(id,AppHelper.getCookie())
+        mModel.uncollection(id,AppHelper.getNameCookie(),AppHelper.getPwdCookie())
                 .subscribeOn(Schedulers.io())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .unsubscribeOn(Schedulers.io())

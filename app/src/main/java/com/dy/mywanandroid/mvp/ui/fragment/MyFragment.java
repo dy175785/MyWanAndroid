@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,9 @@ import com.dy.mywanandroid.R;
 import com.dy.mywanandroid.app.base.BaseSupportFragment;
 import com.dy.mywanandroid.di.component.DaggerMyComponent;
 import com.dy.mywanandroid.mvp.contract.MyContract;
+import com.dy.mywanandroid.mvp.http.entity.base.BaseResponse;
+import com.dy.mywanandroid.mvp.http.entity.result.CollectionResult;
+import com.dy.mywanandroid.mvp.http.entity.result.MyIntegralResult;
 import com.dy.mywanandroid.mvp.http.entity.result.RankResultt;
 import com.dy.mywanandroid.mvp.presenter.MyPresenter;
 import com.dy.mywanandroid.mvp.ui.activity.LoginActivity;
@@ -49,6 +53,8 @@ public class MyFragment extends BaseSupportFragment<MyPresenter> implements MyCo
     MergeLayout mlIntegral;
     @BindView(R.id.ml_collection)
     MergeLayout mlCollection;
+    @BindView(R.id.btn_out)
+    Button btnOut;
 
     public static MyFragment newInstance() {
         MyFragment fragment = new MyFragment();
@@ -70,26 +76,8 @@ public class MyFragment extends BaseSupportFragment<MyPresenter> implements MyCo
         Intent intent = new Intent(getActivity(), RankingActivity.class);
         qtbMy.setTitle("我的").setTextColor(Color.WHITE);
         qtbMy.addRightImageButton(R.mipmap.icon_ranking, R.id.qtb_my).setOnClickListener(v -> {
-            intent.putExtra(AppHelper.MY_INTENT_DATA,0);
+            intent.putExtra(AppHelper.MY_INTENT_DATA, 0);
             startActivity(intent);
-        });
-        mlIntegral.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))){
-                intent.putExtra(AppHelper.MY_INTENT_DATA,1);
-                startActivity(intent);
-            }else {
-                ToastUtils.showLong(R.string.app_no_login);
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-            }
-        });
-        mlCollection.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))){
-                intent.putExtra(AppHelper.MY_INTENT_DATA,2);
-                startActivity(intent);
-            }else {
-                ToastUtils.showLong(R.string.app_no_login);
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-            }
         });
     }
 
@@ -122,14 +110,59 @@ public class MyFragment extends BaseSupportFragment<MyPresenter> implements MyCo
     public void getIntegral(RankResultt resultt) {
 
     }
-    @OnClick({R.id.tv_my_name,R.id.iv_my_img})
-    public void onClick(View view){
-        switch (view.getId()){
+
+    @Override
+    public void getMyIntegral(MyIntegralResult result) {
+        if (result.getErrorCode() == 0) {
+            ToastUtils.showLong("你的总积分是：" + result.getData().getCoinCount() + ",当前排名是：" + result.getData().getRank());
+        } else {
+            ToastUtils.showLong(result.getErrorMsg());
+        }
+
+    }
+
+    @Override
+    public void outLogin(BaseResponse response) {
+        if (response.getErrorCode() == 0){
+            SPUtils.getInstance().clear();
+        }
+    }
+
+    @Override
+    public void getColl(CollectionResult result) {
+
+    }
+
+    @OnClick({R.id.tv_my_name, R.id.iv_my_img, R.id.ml_integral, R.id.ml_collection,R.id.btn_out})
+    public void onClick(View view) {
+        Intent intent = new Intent(getActivity(), RankingActivity.class);
+        switch (view.getId()) {
             case R.id.iv_my_img:
             case R.id.tv_my_name:
-                if (TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))){
+                if (TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
+                break;
+            case R.id.ml_integral:
+                if (!TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))) {
+                    mPresenter.getMyIntegral();
+                } else {
+                    ToastUtils.showLong(R.string.app_no_login);
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+
+                break;
+            case R.id.ml_collection:
+                if (!TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))) {
+                    intent.putExtra(AppHelper.MY_INTENT_DATA, 2);
+                    startActivity(intent);
+                } else {
+                    ToastUtils.showLong(R.string.app_no_login);
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+                break;
+            case R.id.btn_out:
+                mPresenter.outLogin();
                 break;
             default:
                 break;
@@ -140,8 +173,11 @@ public class MyFragment extends BaseSupportFragment<MyPresenter> implements MyCo
     public void onSupportVisible() {
         super.onSupportVisible();
         String name = SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME);
-        if (!TextUtils.isEmpty(name)){
+        if (!TextUtils.isEmpty(name)) {
             tvMyName.setText(name);
+            btnOut.setVisibility(View.VISIBLE);
+        }else {
+            btnOut.setVisibility(View.GONE);
         }
     }
 }

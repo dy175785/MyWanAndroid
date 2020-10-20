@@ -50,4 +50,14 @@
         app:ivSrc="@mipmap/icon_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_out"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_login_btn_bg"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="退出登录"/>
 </LinearLayout>
