@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_main_type_1"/>
         <com.sackcentury.shinebuttonlib.ShineButton
+            android:visibility="gone"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_alignParentRight="true"

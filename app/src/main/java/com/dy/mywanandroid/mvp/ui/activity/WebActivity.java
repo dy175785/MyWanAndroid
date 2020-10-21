@@ -98,7 +98,7 @@ public class WebActivity extends BaseSupportActivity {
         webSettings.setDisplayZoomControls(true);
         // 设置默认字体大小
         if (getIntent().getSerializableExtra(AppHelper.MAIN_WEB_DATA) != null) {
-            if (getIntent().getStringExtra(AppHelper.MAIN_WEB_TYPE).equals(AppHelper.MAIN_WEB_RANK)){
+            if (getIntent().getStringExtra(AppHelper.MAIN_WEB_TYPE)!=null){
                 collBean = (CollectionResult.DataBean.DatasBean) getIntent().getSerializableExtra(AppHelper.MAIN_WEB_DATA);
                 tvTitleWeb.setText(collBean.getTitle());
                 wvWeb.loadUrl(collBean.getLink());

@@ -1,9 +1,11 @@
 package com.dy.mywanandroid.mvp.presenter;
 
 import com.dy.mywanandroid.mvp.contract.ManaggerContract;
+import com.dy.mywanandroid.mvp.http.entity.base.BaseResponse;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.dy.mywanandroid.mvp.http.entity.result.ProjectDataList;
 import com.dy.mywanandroid.mvp.http.entity.result.ProjectTypeList;
+import com.dy.mywanandroid.utils.AppHelper;
 import com.haife.android.mcas.mvp.BasePresenter;
 import com.haife.android.mcas.utils.RxLifecycleUtils;
 
@@ -106,6 +108,74 @@ public class ManaggerPresenter extends BasePresenter<ManaggerContract.Model,Mana
                             mRootView.getProjectData(list);
                         }else {
                             mRootView.getProjectData(null);
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 收藏站内文章
+     * @param id
+     */
+    public void collectionWithin(int id){
+        mModel.collection1(id, AppHelper.getNameCookie(),AppHelper.getPwdCookie())
+                .subscribeOn(Schedulers.io())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ErrorHandleSubscriber<BaseResponse>(mRxErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.getErrorCode() == 0){
+
+                        }else {
+
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 收藏站外的文章
+     * @param title
+     * @param author
+     * @param link
+     */
+    public void collectionExternal(String title,String author,String link){
+        mModel.collection2(title, author, link,AppHelper.getNameCookie(),AppHelper.getPwdCookie())
+                .subscribeOn(Schedulers.io())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ErrorHandleSubscriber<BaseResponse>(mRxErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.getErrorCode() == 0){
+
+                        }else {
+
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 取消收藏
+     * @param id
+     */
+    public void unCollection(int id){
+        mModel.uncollection(id,AppHelper.getNameCookie(),AppHelper.getPwdCookie())
+                .subscribeOn(Schedulers.io())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ErrorHandleSubscriber<BaseResponse>(mRxErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.getErrorCode() == 0){
+
+                        }else {
+
                         }
                     }
                 });

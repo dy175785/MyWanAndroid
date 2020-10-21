@@ -85,7 +85,7 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         mainTopBar.setTitle("首页").setTextColor(Color.WHITE);
-        mainTopBar.addRightTextButton("搜索",R.id.main_top_bar).setTextColor(Color.WHITE);
+        //mainTopBar.addRightTextButton("搜索",R.id.main_top_bar).setTextColor(Color.WHITE);
         mPresenter.getBanner();
         mPresenter.getBlog(page);
         adapter = new MainRvAdapter(R.layout.main_item_blog_list, blogList);

@@ -2,6 +2,7 @@ package com.dy.mywanandroid.mvp.model;
 
 import com.dy.mywanandroid.mvp.contract.ManaggerContract;
 import com.dy.mywanandroid.mvp.http.api.service.CommonService;
+import com.dy.mywanandroid.mvp.http.entity.base.BaseResponse;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.dy.mywanandroid.mvp.http.entity.result.ProjectDataList;
 import com.dy.mywanandroid.mvp.http.entity.result.ProjectTypeList;
@@ -62,5 +63,20 @@ public class ManaggerModel extends BaseModel implements ManaggerContract.Model {
     @Override
     public Observable<MainBlogList> getAccountData(int cid, int page) {
         return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).getAccountData(cid, page)).flatMap((Function<Observable<MainBlogList>, ObservableSource<MainBlogList>>) mainBlogListObservable -> mainBlogListObservable);
+    }
+
+    @Override
+    public Observable<BaseResponse> collection1(int id, String name, String pwd) {
+        return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).collectionStationBlog(id,name,pwd)).flatMap((Function<Observable<BaseResponse>, ObservableSource<BaseResponse>>) baseResponseObservable -> baseResponseObservable);
+    }
+
+    @Override
+    public Observable<BaseResponse> collection2(String title, String author, String link, String name, String pwd) {
+        return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).collectionOutsideBlog(title, author, link,name,pwd)).flatMap((Function<Observable<BaseResponse>, ObservableSource<BaseResponse>>) baseResponseObservable -> baseResponseObservable);
+    }
+
+    @Override
+    public Observable<BaseResponse> uncollection(int id, String name, String pwd) {
+        return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).uncollectionBlog(id,name,pwd)).flatMap((Function<Observable<BaseResponse>, ObservableSource<BaseResponse>>) baseResponseObservable -> baseResponseObservable);
     }
 }

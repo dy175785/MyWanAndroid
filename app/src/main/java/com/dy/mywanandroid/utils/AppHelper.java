@@ -14,6 +14,9 @@ public class AppHelper {
     public static final String MAIN_WEB_DATA = "main_web_data";
     public static final String MAIN_WEB_TYPE = "main_web_type";
     public static final String MAIN_WEB_RANK = "ranking";
+    public static final String MAIN_WEB_MAIN = "main";
+    public static final String MAIN_WEB_ACCOUNT = "account";
+    public static final String MAIN_WEB_MAGGER = "magger";
     /**
      * 账号密码持久化
      */

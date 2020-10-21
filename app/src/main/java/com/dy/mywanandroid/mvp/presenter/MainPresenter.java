@@ -186,7 +186,11 @@ public class MainPresenter extends BasePresenter<MianContract.Model, MianContrac
                 .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
                     @Override
                     public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.getErrorCode() == 0){
 
+                        }else {
+
+                        }
                     }
                 });
     }

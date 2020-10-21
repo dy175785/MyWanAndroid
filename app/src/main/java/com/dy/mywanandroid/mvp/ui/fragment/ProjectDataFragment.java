@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.utils.TextUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dy.mywanandroid.R;
 import com.dy.mywanandroid.app.base.BaseSupportFragment;
@@ -24,6 +27,7 @@ import com.dy.mywanandroid.mvp.ui.activity.WebActivity;
 import com.dy.mywanandroid.mvp.ui.adapter.ProjectDataAdapter;
 import com.dy.mywanandroid.utils.AppHelper;
 import com.haife.android.mcas.di.component.AppComponent;
+import com.sackcentury.shinebuttonlib.ShineButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -101,6 +105,32 @@ public class ProjectDataFragment extends BaseSupportFragment<ManaggerPresenter> 
             intent.putExtra(AppHelper.MAIN_WEB_DATA, datasBeans.get(position));
             intent.setClass(mContext, WebActivity.class);
             startActivity(intent);
+        });
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.sb_main:
+                        if (TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))){
+                            ((ShineButton)view).setChecked(false);
+                            ToastUtils.showLong(R.string.app_no_login);
+                        }else {
+                            if (((ShineButton)view).isChecked()){
+                                if (TextUtils.isEmpty(datasBeans.get(position).getAuthor())){
+                                    mPresenter.collectionWithin(datasBeans.get(position).getId());
+                                }else {
+                                    mPresenter.collectionExternal(datasBeans.get(position).getTitle(),datasBeans.get(position).getAuthor(),datasBeans.get(position).getLink());
+                                }
+
+                            }else {
+                                mPresenter.unCollection(datasBeans.get(position).getId());
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         });
     }
 

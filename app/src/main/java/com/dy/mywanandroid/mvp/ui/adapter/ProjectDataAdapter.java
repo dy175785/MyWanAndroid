@@ -37,15 +37,6 @@ public class ProjectDataAdapter extends BaseQuickAdapter<MainBlogList.DataBean.D
         helper.setText(R.id.tv_main_time,item.getNiceDate());
         Glide.with(mContext).load(item.getEnvelopePic()).into((ImageView) helper.getView(R.id.iv_project));
         helper.setText(R.id.tv_main_cntent,item.getTitle());
-        ShineButton sb =  helper.getView(R.id.sb_main);
-
-        sb.setOnCheckStateChangeListener((view, checked) -> {
-            if (TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))){
-                sb.setChecked(false);
-                ToastUtils.showLong(R.string.app_no_login);
-            }else {
-
-            }
-        });
+        helper.addOnClickListener(R.id.sb_main);
     }
 }
