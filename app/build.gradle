@@ -1,8 +1,12 @@
 apply plugin: 'com.android.application'
+def releaseTime() {
+    return new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("GMT+:08:00"))
+}
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     defaultConfig {
+        resConfigs('zh-rCN')
         applicationId "com.dy.mywanandroid"
         multiDexEnabled true
         minSdkVersion rootProject.ext.android["minSdkVersion"]
@@ -16,8 +20,15 @@ android {
             }
         }
         vectorDrawables.useSupportLibrary = true
+        ndk {
+            abiFilters 'armeabi'
+        }
     }
-
+    sourceSets{
+        main{
+            jniLibs.srcDirs = ['libs']
+        }
+    }
     buildTypes {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
@@ -28,8 +39,17 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "boolean", "USE_CANARY", "false"
             buildConfigField("String", "API_HOST", "\"https://www.wanandroid.com/\"")
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                if (variant.name.endsWith("release")) {
+                    outputFileName = "WAndroid-demo${releaseTime()}.apk"
+                    //outputFileName = "AIJ.apk"
+                }
+            }
         }
     }
     compileOptions {

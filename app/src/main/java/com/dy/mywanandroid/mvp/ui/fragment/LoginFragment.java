@@ -17,6 +17,7 @@ import com.dy.mywanandroid.app.base.BaseSupportFragment;
 import com.dy.mywanandroid.di.component.DaggerMainComponent;
 import com.dy.mywanandroid.mvp.contract.MianContract;
 import com.dy.mywanandroid.mvp.http.entity.result.BannerList;
+import com.dy.mywanandroid.mvp.http.entity.result.CollectionResult;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.dy.mywanandroid.mvp.presenter.MainPresenter;
 import com.haife.android.mcas.di.component.AppComponent;
@@ -126,6 +127,11 @@ public class LoginFragment extends BaseSupportFragment<MainPresenter> implements
     public void registerSuccess() {
         btnLogin.setVisibility(View.VISIBLE);
         editRePassword.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void getColl(CollectionResult result) {
+
     }
 
     @Override

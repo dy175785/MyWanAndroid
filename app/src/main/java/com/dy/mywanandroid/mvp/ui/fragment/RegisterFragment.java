@@ -17,6 +17,7 @@ import com.dy.mywanandroid.app.base.BaseSupportFragment;
 import com.dy.mywanandroid.di.component.DaggerMainComponent;
 import com.dy.mywanandroid.mvp.contract.MianContract;
 import com.dy.mywanandroid.mvp.http.entity.result.BannerList;
+import com.dy.mywanandroid.mvp.http.entity.result.CollectionResult;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.dy.mywanandroid.mvp.presenter.MainPresenter;
 import com.haife.android.mcas.di.component.AppComponent;
@@ -54,6 +55,11 @@ public class RegisterFragment extends BaseSupportFragment<MainPresenter> impleme
     @Override
     public void registerSuccess() {
         getActivity().onBackPressed();
+    }
+
+    @Override
+    public void getColl(CollectionResult result) {
+
     }
 
     @Override

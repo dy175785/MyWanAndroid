@@ -125,6 +125,8 @@ public class MyFragment extends BaseSupportFragment<MyPresenter> implements MyCo
     public void outLogin(BaseResponse response) {
         if (response.getErrorCode() == 0){
             SPUtils.getInstance().clear();
+            btnOut.setVisibility(View.GONE);
+            tvMyName.setText("尚未登录");
         }
     }
 
@@ -180,4 +182,5 @@ public class MyFragment extends BaseSupportFragment<MyPresenter> implements MyCo
             btnOut.setVisibility(View.GONE);
         }
     }
+
 }

@@ -4,45 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".mvp.ui.fragment.LoginFragment"
+    android:background="@color/white"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
-        android:background="@drawable/shape_login_bg_black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <EditText
+            android:background="@drawable/shape_login_etline"
             android:layout_marginTop="50dp"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
             android:hint="账号"
-            android:textColorHint="@color/white"
             android:id="@+id/editTextPhone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white" />
+            android:layout_height="50dp" />
 
         <EditText
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/shape_login_etline"
             android:inputType="textPassword"
             android:layout_margin="@dimen/dp_10"
             android:hint="密码"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
             android:id="@+id/editTextNumberPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp" />
         <EditText
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/shape_login_etline"
             android:visibility="gone"
             android:inputType="textPassword"
             android:layout_margin="@dimen/dp_10"
             android:hint="请确认新密码"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
             android:id="@+id/editRePassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp" />
 
         <LinearLayout
             android:padding="@dimen/dp_10"

@@ -5,6 +5,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.dy.mywanandroid.mvp.contract.MianContract;
 import com.dy.mywanandroid.mvp.http.entity.base.BaseResponse;
 import com.dy.mywanandroid.mvp.http.entity.result.BannerList;
+import com.dy.mywanandroid.mvp.http.entity.result.CollectionResult;
 import com.dy.mywanandroid.mvp.http.entity.result.LoginResult;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.dy.mywanandroid.utils.AppHelper;
@@ -195,4 +196,22 @@ public class MainPresenter extends BasePresenter<MianContract.Model, MianContrac
                 });
     }
 
+
+    /**
+     * 获取收藏列表
+     */
+    public void getColl(int page){
+        mModel.getColl(page,AppHelper.getNameCookie(),AppHelper.getPwdCookie())
+                .subscribeOn(Schedulers.io())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .subscribe(new ErrorHandleSubscriber<CollectionResult>(mErrorHandler) {
+                    @Override
+                    public void onNext(CollectionResult collectionResult) {
+                        mRootView.getColl(collectionResult);
+                    }
+                });
+    }
 }

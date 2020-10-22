@@ -187,6 +187,15 @@ public class MainBlogList implements Serializable{
             private int visible;
             private int zan;
             private List<?> tags;
+            private boolean isChcked;
+
+            public boolean isChcked() {
+                return isChcked;
+            }
+
+            public void setChcked(boolean chcked) {
+                isChcked = chcked;
+            }
 
             public String getApkLink() {
                 return apkLink;

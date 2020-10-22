@@ -22,6 +22,7 @@ import com.dy.mywanandroid.app.base.BaseSupportFragment;
 import com.dy.mywanandroid.di.component.DaggerMainComponent;
 import com.dy.mywanandroid.mvp.contract.MianContract;
 import com.dy.mywanandroid.mvp.http.entity.result.BannerList;
+import com.dy.mywanandroid.mvp.http.entity.result.CollectionResult;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.dy.mywanandroid.mvp.presenter.MainPresenter;
 import com.dy.mywanandroid.mvp.ui.activity.WebActivity;
@@ -59,7 +60,7 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
     QMUITopBar mainTopBar;
     @BindView(R.id.main_collapsing_top_bar_layout)
     QMUICollapsingTopBarLayout mainCollapsingTopBarLayout;
-
+    private List<CollectionResult.DataBean.DatasBean> resultList = new ArrayList<>();
     private List<MainBlogList.DataBean.DatasBean> blogList = new ArrayList<>();
     private int page = 0;
     private MainRvAdapter adapter;
@@ -86,22 +87,26 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
     public void initData(@Nullable Bundle savedInstanceState) {
         mainTopBar.setTitle("首页").setTextColor(Color.WHITE);
         //mainTopBar.addRightTextButton("搜索",R.id.main_top_bar).setTextColor(Color.WHITE);
-        mPresenter.getBanner();
-        mPresenter.getBlog(page);
         adapter = new MainRvAdapter(R.layout.main_item_blog_list, blogList);
+        mPresenter.getBanner();
+        mPresenter.getColl(page);
+//        mPresenter.getColl(page);
+
         rvMain.setLayoutManager(new LinearLayoutManager(mContext));
         adapter.bindToRecyclerView(rvMain);
         srlMain.setOnRefreshListener(refreshLayout -> {
             page = 0;
             srlMain.setEnableLoadMore(false);
-            mPresenter.getBlog(page);
+            mPresenter.getColl(page);
+//            mPresenter.getColl(page);
             srlMain.setEnableLoadMore(true);
             srlMain.finishRefresh();
         });
         srlMain.setOnLoadMoreListener(refreshLayout -> {
             page++;
             srlMain.setEnableRefresh(false);
-            mPresenter.getBlog(page);
+            mPresenter.getColl(page);
+//            mPresenter.getColl(page);
             srlMain.setEnableRefresh(true);
             srlMain.finishLoadMore();
         });
@@ -111,32 +116,31 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
             intent.setClass(mContext, WebActivity.class);
             startActivity(intent);
         });
-        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()){
-                    case R.id.sb_main:
-                        if (TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))){
-                            ((ShineButton)view).setChecked(false);
-                            ToastUtils.showLong(R.string.app_no_login);
-                        }else {
-                            if (((ShineButton)view).isChecked()){
-                                if (TextUtils.isEmpty(blogList.get(position).getAuthor())){
-                                    mPresenter.collectionWithin(blogList.get(position).getId());
-                                }else {
-                                    mPresenter.collectionExternal(blogList.get(position).getTitle(),blogList.get(position).getAuthor(),blogList.get(position).getLink());
-                                }
 
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()){
+                case R.id.sb_main:
+                    if (TextUtils.isEmpty(SPUtils.getInstance().getString(AppHelper.LOGIN_USER_USERNAME))){
+                        ((ShineButton)view).setChecked(false);
+                        ToastUtils.showLong(R.string.app_no_login);
+                    }else {
+                        if (((ShineButton)view).isChecked()){
+                            if (TextUtils.isEmpty(blogList.get(position).getAuthor())){
+                                mPresenter.collectionWithin(blogList.get(position).getId());
                             }else {
-                                mPresenter.unCollection(blogList.get(position).getId());
+                                mPresenter.collectionExternal(blogList.get(position).getTitle(),blogList.get(position).getAuthor(),blogList.get(position).getLink());
                             }
+
+                        }else {
+                            mPresenter.unCollection(blogList.get(position).getId());
                         }
-                        break;
-                    default:
-                        break;
-                }
+                    }
+                    break;
+                default:
+                    break;
             }
         });
+
     }
 
     @Override
@@ -175,13 +179,42 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
             if (page != 0 && list.getData().getDatas().size() == 0) {
                 page--;
             }
+            for (int i = 0; i < resultList.size(); i++) {
+                for (int j = 0; j < list.getData().getDatas().size(); j++) {
+                    if (resultList.get(i).getOriginId() == list.getData().getDatas().get(j).getId()){
+                        list.getData().getDatas().get(j).setChcked(true);
+                    }else{
+                        if (list.getData().getDatas().get(j).isChcked()){
+                            list.getData().getDatas().get(j).setChcked(true);
+                        }else{
+                            list.getData().getDatas().get(j).setChcked(false);
+                        }
+                    }
+
+                }
+            }
             blogList.addAll(list.getData().getDatas());
             adapter.notifyDataSetChanged();
+
         }
     }
 
     @Override
     public void registerSuccess() {
 
+    }
+
+    @Override
+    public void getColl(CollectionResult result) {
+        mPresenter.getBlog(page);
+        if (result.getErrorCode() == 0){
+            if (page == 0) {
+                resultList.clear();
+            }
+            if (page != 1 && result.getData().getDatas().size() == 0) {
+                page--;
+            }
+            resultList.addAll(result.getData().getDatas());
+        }
     }
 }

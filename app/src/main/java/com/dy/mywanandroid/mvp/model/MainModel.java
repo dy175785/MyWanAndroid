@@ -4,6 +4,7 @@ import com.dy.mywanandroid.mvp.contract.MianContract;
 import com.dy.mywanandroid.mvp.http.api.service.CommonService;
 import com.dy.mywanandroid.mvp.http.entity.base.BaseResponse;
 import com.dy.mywanandroid.mvp.http.entity.result.BannerList;
+import com.dy.mywanandroid.mvp.http.entity.result.CollectionResult;
 import com.dy.mywanandroid.mvp.http.entity.result.LoginResult;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.haife.android.mcas.di.scope.ActivityScope;
@@ -63,5 +64,9 @@ public class MainModel extends BaseModel implements MianContract.Model {
     @Override
     public Observable<BaseResponse> uncollection(int id, String name, String pwd) {
         return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).uncollectionBlog(id,name,pwd)).flatMap((Function<Observable<BaseResponse>, ObservableSource<BaseResponse>>) baseResponseObservable -> baseResponseObservable);
+    }
+    @Override
+    public Observable<CollectionResult> getColl(int page, String name, String pwd) {
+        return Observable.just(mRepositoryManager.obtainRetrofitService(CommonService.class).getColl(page,name,pwd)).flatMap((Function<Observable<CollectionResult>, ObservableSource<CollectionResult>>) observable -> observable);
     }
 }

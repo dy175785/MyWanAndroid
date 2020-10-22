@@ -1,6 +1,7 @@
 package com.dy.mywanandroid.mvp.ui.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -40,7 +41,12 @@ public class MainRvAdapter extends BaseQuickAdapter<MainBlogList.DataBean.DatasB
             helper.setText(R.id.tv_main_time,item.getNiceDate());
         }
         helper.setText(R.id.tv_main_cntent,item.getTitle());
-
+        ShineButton button = helper.getView(R.id.sb_main);
+        if (item.isChcked()){
+            button.setChecked(true);
+        }else {
+            button.setChecked(false);
+        }
         helper.addOnClickListener(R.id.sb_main);
     }
 }

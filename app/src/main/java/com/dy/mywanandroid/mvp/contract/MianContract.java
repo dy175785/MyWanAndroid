@@ -2,6 +2,7 @@ package com.dy.mywanandroid.mvp.contract;
 
 import com.dy.mywanandroid.mvp.http.entity.base.BaseResponse;
 import com.dy.mywanandroid.mvp.http.entity.result.BannerList;
+import com.dy.mywanandroid.mvp.http.entity.result.CollectionResult;
 import com.dy.mywanandroid.mvp.http.entity.result.LoginResult;
 import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.haife.android.mcas.mvp.IModel;
@@ -38,6 +39,11 @@ public interface MianContract {
          * 注册成功
          */
         void registerSuccess();
+        /**
+         * 获取我的收藏列表
+         * @param result
+         */
+        void getColl(CollectionResult result);
     }
 
     interface Model extends IModel {
@@ -100,5 +106,10 @@ public interface MianContract {
          * @return
          */
         Observable<BaseResponse> uncollection(int id, String name, String pwd);
+        /**
+         * 获取收藏列表
+         * @return
+         */
+        Observable<CollectionResult> getColl(int page, String name, String pwd);
     }
 }
