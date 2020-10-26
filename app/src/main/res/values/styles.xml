@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="QMUI.Compat.NoActionBar">
         <!-- Customize your theme here. -->
@@ -12,5 +12,12 @@
         <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
         <!--//退出时的动画-->
         <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+    <style name="TranslucentTheme" parent="android:Theme.Translucent.NoTitleBar.Fullscreen" />
+
+    <style name="SqlashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@mipmap/big_android</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/white</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

@@ -80,15 +80,20 @@ public class ManaggerFragment extends BaseSupportFragment<ManaggerPresenter> imp
     @Override
     public void getProjectType(ProjectTypeList list) {
         if (list!=null){
-            List<ProjectTypeList.DataBean> data = list.getData();
-            for (int i = 0; i < data.size(); i++) {
-                ProjectDataFragment fragment = ProjectDataFragment.newInstance(data.get(i));
-                fragmentList.add(fragment);
-                tlManagger.addTab(tlManagger.newTab().setText(data.get(i).getName()));
+            try {
+                List<ProjectTypeList.DataBean> data = list.getData();
+                for (int i = 0; i < data.size(); i++) {
+                    ProjectDataFragment fragment = ProjectDataFragment.newInstance(data.get(i));
+                    fragmentList.add(fragment);
+                    tlManagger.addTab(tlManagger.newTab().setText(data.get(i).getName()));
+                }
+                adapter = new ManggerFragmentPageAdapter(getChildFragmentManager(),fragmentList,list);
+                vpManagger.setAdapter(adapter);
+                tlManagger.setupWithViewPager(vpManagger);
+            }catch (Exception e){
+
             }
-            adapter = new ManggerFragmentPageAdapter(getChildFragmentManager(),fragmentList,list);
-            vpManagger.setAdapter(adapter);
-            tlManagger.setupWithViewPager(vpManagger);
+
         }
     }
 

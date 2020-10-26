@@ -452,6 +452,67 @@ public class MainBlogList implements Serializable{
             public void setTags(List<?> tags) {
                 this.tags = tags;
             }
+
+            @Override
+            public String toString() {
+                return "DatasBean{" +
+                        "apkLink='" + apkLink + '\'' +
+                        ", audit=" + audit +
+                        ", author='" + author + '\'' +
+                        ", canEdit=" + canEdit +
+                        ", chapterId=" + chapterId +
+                        ", chapterName='" + chapterName + '\'' +
+                        ", collect=" + collect +
+                        ", courseId=" + courseId +
+                        ", desc='" + desc + '\'' +
+                        ", descMd='" + descMd + '\'' +
+                        ", envelopePic='" + envelopePic + '\'' +
+                        ", fresh=" + fresh +
+                        ", id=" + id +
+                        ", link='" + link + '\'' +
+                        ", niceDate='" + niceDate + '\'' +
+                        ", niceShareDate='" + niceShareDate + '\'' +
+                        ", origin='" + origin + '\'' +
+                        ", prefix='" + prefix + '\'' +
+                        ", projectLink='" + projectLink + '\'' +
+                        ", publishTime=" + publishTime +
+                        ", realSuperChapterId=" + realSuperChapterId +
+                        ", selfVisible=" + selfVisible +
+                        ", shareDate=" + shareDate +
+                        ", shareUser='" + shareUser + '\'' +
+                        ", superChapterId=" + superChapterId +
+                        ", superChapterName='" + superChapterName + '\'' +
+                        ", title='" + title + '\'' +
+                        ", type=" + type +
+                        ", userId=" + userId +
+                        ", visible=" + visible +
+                        ", zan=" + zan +
+                        ", tags=" + tags +
+                        ", isChcked=" + isChcked +
+                        '}';
+            }
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "curPage=" + curPage +
+                    ", offset=" + offset +
+                    ", over=" + over +
+                    ", pageCount=" + pageCount +
+                    ", size=" + size +
+                    ", total=" + total +
+                    ", datas=" + datas +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "MainBlogList{" +
+                "data=" + data +
+                ", errorCode=" + errorCode +
+                ", errorMsg='" + errorMsg + '\'' +
+                '}';
     }
 }

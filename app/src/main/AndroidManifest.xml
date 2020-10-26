@@ -28,12 +28,15 @@
     <application
         android:name="com.haife.android.mcas.base.BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/android"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/android"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvp.ui.activity.LoginActivity"></activity>
+        <activity android:name=".mvp.ui.activity.SplashActivity" android:theme="@style/SqlashTheme">
+
+        </activity>
+        <activity android:name=".mvp.ui.activity.LoginActivity" />
         <activity android:name=".mvp.ui.activity.RankingActivity" />
         <activity android:name=".mvp.ui.activity.WebActivity" />
         <activity android:name=".MainActivity">

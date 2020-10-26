@@ -48,13 +48,6 @@ public class AccountDataFragment extends BaseSupportFragment<ManaggerPresenter> 
         this.datasBean = datasBean;
     }
 
-    public static AccountDataFragment newInstance(ProjectTypeList.DataBean datasBean) {
-        AccountDataFragment fragment = new AccountDataFragment(datasBean);
-
-        return fragment;
-    }
-
-
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
         DaggerManaggerComponent.builder().view(this).appComponent(appComponent).build().inject(this);

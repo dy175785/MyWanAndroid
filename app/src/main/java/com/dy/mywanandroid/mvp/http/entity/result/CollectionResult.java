@@ -278,6 +278,50 @@ public class CollectionResult  implements Serializable{
             public void setZan(int zan) {
                 this.zan = zan;
             }
+
+            @Override
+            public String toString() {
+                return "DatasBean{" +
+                        "author='" + author + '\'' +
+                        ", chapterId=" + chapterId +
+                        ", chapterName='" + chapterName + '\'' +
+                        ", courseId=" + courseId +
+                        ", desc='" + desc + '\'' +
+                        ", envelopePic='" + envelopePic + '\'' +
+                        ", id=" + id +
+                        ", link='" + link + '\'' +
+                        ", niceDate='" + niceDate + '\'' +
+                        ", origin='" + origin + '\'' +
+                        ", originId=" + originId +
+                        ", publishTime=" + publishTime +
+                        ", title='" + title + '\'' +
+                        ", userId=" + userId +
+                        ", visible=" + visible +
+                        ", zan=" + zan +
+                        '}';
+            }
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "curPage=" + curPage +
+                    ", offset=" + offset +
+                    ", over=" + over +
+                    ", pageCount=" + pageCount +
+                    ", size=" + size +
+                    ", total=" + total +
+                    ", datas=" + datas +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "CollectionResult{" +
+                "data=" + data +
+                ", errorCode=" + errorCode +
+                ", errorMsg='" + errorMsg + '\'' +
+                '}';
     }
 }

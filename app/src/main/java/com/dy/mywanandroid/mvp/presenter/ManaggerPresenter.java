@@ -40,11 +40,7 @@ public class ManaggerPresenter extends BasePresenter<ManaggerContract.Model,Mana
                 .subscribe(new ErrorHandleSubscriber<ProjectTypeList>(mRxErrorHandler) {
                     @Override
                     public void onNext(ProjectTypeList projectTypeList) {
-                        if (projectTypeList.getErrorCode() == 0){
-                            mRootView.getProjectType(projectTypeList);
-                        }else {
-                            mRootView.getProjectType(null);
-                        }
+                        mRootView.getProjectType(projectTypeList);
                     }
                 });
     }
@@ -62,11 +58,8 @@ public class ManaggerPresenter extends BasePresenter<ManaggerContract.Model,Mana
                 .subscribe(new ErrorHandleSubscriber<MainBlogList>(mRxErrorHandler) {
                     @Override
                     public void onNext(MainBlogList projectDataList) {
-                        if (projectDataList.getErrorCode()==0){
-                            mRootView.getProjectData(projectDataList);
-                        }else {
-                            mRootView.getProjectData(null);
-                        }
+                        mRootView.getProjectData(projectDataList);
+
                     }
                 });
     }
@@ -82,11 +75,7 @@ public class ManaggerPresenter extends BasePresenter<ManaggerContract.Model,Mana
                 .subscribe(new ErrorHandleSubscriber<ProjectTypeList>(mRxErrorHandler) {
                     @Override
                     public void onNext(ProjectTypeList projectTypeList) {
-                        if (projectTypeList.getErrorCode() == 0){
-                            mRootView.getProjectType(projectTypeList);
-                        }else {
-                            mRootView.getProjectType(null);
-                        }
+                        mRootView.getProjectType(projectTypeList);
                     }
                 });
     }
@@ -104,11 +93,7 @@ public class ManaggerPresenter extends BasePresenter<ManaggerContract.Model,Mana
                 .subscribe(new ErrorHandleSubscriber<MainBlogList>(mRxErrorHandler) {
                     @Override
                     public void onNext(MainBlogList list) {
-                        if (list.getErrorCode() == 0){
-                            mRootView.getProjectData(list);
-                        }else {
-                            mRootView.getProjectData(null);
-                        }
+                        mRootView.getProjectData(list);
                     }
                 });
     }

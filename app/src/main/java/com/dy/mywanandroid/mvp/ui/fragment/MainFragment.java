@@ -88,6 +88,7 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
         mainTopBar.setTitle("首页").setTextColor(Color.WHITE);
         //mainTopBar.addRightTextButton("搜索",R.id.main_top_bar).setTextColor(Color.WHITE);
         adapter = new MainRvAdapter(R.layout.main_item_blog_list, blogList);
+
         mPresenter.getBanner();
         mPresenter.getColl(page);
 //        mPresenter.getColl(page);
@@ -167,36 +168,40 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
     public void getBanner(BannerList list) {
         BannerImageAdapter adapter = new BannerImageAdapter(list.getData(), mContext);
         bannerMain.addBannerLifecycleObserver(this).setAdapter(adapter).setIndicator(new CircleIndicator(mContext));
-
     }
 
     @Override
     public void getBlogList(MainBlogList list) {
-        if (list != null) {
-            if (page == 0) {
-                blogList.clear();
-            }
-            if (page != 0 && list.getData().getDatas().size() == 0) {
-                page--;
-            }
-            for (int i = 0; i < resultList.size(); i++) {
-                for (int j = 0; j < list.getData().getDatas().size(); j++) {
-                    if (resultList.get(i).getOriginId() == list.getData().getDatas().get(j).getId()){
-                        list.getData().getDatas().get(j).setChcked(true);
-                    }else{
-                        if (list.getData().getDatas().get(j).isChcked()){
+        try {
+            if (list != null) {
+                if (page == 0) {
+                    blogList.clear();
+                }
+                if (page != 0 && list.getData().getDatas().size() == 0) {
+                    page--;
+                }
+                for (int i = 0; i < resultList.size(); i++) {
+                    for (int j = 0; j < list.getData().getDatas().size(); j++) {
+                        if (resultList.get(i).getOriginId() == list.getData().getDatas().get(j).getId()){
                             list.getData().getDatas().get(j).setChcked(true);
                         }else{
-                            list.getData().getDatas().get(j).setChcked(false);
+                            if (list.getData().getDatas().get(j).isChcked()){
+                                list.getData().getDatas().get(j).setChcked(true);
+                            }else{
+                                list.getData().getDatas().get(j).setChcked(false);
+                            }
                         }
-                    }
 
+                    }
                 }
+                blogList.addAll(list.getData().getDatas());
+                adapter.notifyDataSetChanged();
+
             }
-            blogList.addAll(list.getData().getDatas());
-            adapter.notifyDataSetChanged();
+        }catch (Exception e){
 
         }
+
     }
 
     @Override
@@ -206,15 +211,21 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
 
     @Override
     public void getColl(CollectionResult result) {
-        mPresenter.getBlog(page);
-        if (result.getErrorCode() == 0){
-            if (page == 0) {
-                resultList.clear();
+        try {
+            mPresenter.getBlog(page);
+            System.out.println("================="+result);
+            if (result.getErrorCode() == 0){
+                if (page == 0) {
+                    resultList.clear();
+                }
+                if (page != 1 && result.getData().getDatas().size() == 0) {
+                    page--;
+                }
+                resultList.addAll(result.getData().getDatas());
             }
-            if (page != 1 && result.getData().getDatas().size() == 0) {
-                page--;
-            }
-            resultList.addAll(result.getData().getDatas());
+        }catch (Exception e){
+
         }
+
     }
 }

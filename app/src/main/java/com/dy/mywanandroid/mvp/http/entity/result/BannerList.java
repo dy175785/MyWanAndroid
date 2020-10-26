@@ -127,5 +127,28 @@ public class BannerList {
         public void setUrl(String url) {
             this.url = url;
         }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "desc='" + desc + '\'' +
+                    ", id=" + id +
+                    ", imagePath='" + imagePath + '\'' +
+                    ", isVisible=" + isVisible +
+                    ", order=" + order +
+                    ", title='" + title + '\'' +
+                    ", type=" + type +
+                    ", url='" + url + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "BannerList{" +
+                "errorCode=" + errorCode +
+                ", errorMsg='" + errorMsg + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

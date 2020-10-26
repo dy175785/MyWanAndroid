@@ -74,16 +74,21 @@ public class AccountFragment extends BaseSupportFragment<ManaggerPresenter> impl
 
     @Override
     public void getProjectType(ProjectTypeList list) {
+        if (list!=null){
+            try {
+                List<ProjectTypeList.DataBean> data = list.getData();
+                for (int i = 0; i < data.size(); i++) {
+                    tabAccount.addTab(tabAccount.newTab().setText(data.get(i).getName()));
+                    AccountDataFragment fragment = new AccountDataFragment(data.get(i));
+                    this.list.add(fragment);
+                }
+                adapter = new ManggerFragmentPageAdapter(getChildFragmentManager(),this.list,list);
+                vpAccount.setAdapter(adapter);
+                tabAccount.setupWithViewPager(vpAccount);
+            }catch (Exception e){
 
-        List<ProjectTypeList.DataBean> data = list.getData();
-        for (int i = 0; i < data.size(); i++) {
-            tabAccount.addTab(tabAccount.newTab().setText(data.get(i).getName()));
-            AccountDataFragment fragment = new AccountDataFragment(list.getData().get(i));
-            this.list.add(fragment);
+            }
         }
-        adapter = new ManggerFragmentPageAdapter(getChildFragmentManager(),this.list,list);
-        vpAccount.setAdapter(adapter);
-        tabAccount.setupWithViewPager(vpAccount);
     }
 
     @Override

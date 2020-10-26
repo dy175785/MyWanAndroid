@@ -30,23 +30,27 @@ android {
         }
     }
     buildTypes {
-        debug {
-            buildConfigField "boolean", "LOG_DEBUG", "true"
-            buildConfigField "boolean", "USE_CANARY", "true"
-            buildConfigField("String", "API_HOST", "\"https://www.wanandroid.com/\"")
-        }
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "false"
-            buildConfigField "boolean", "USE_CANARY", "false"
-            buildConfigField("String", "API_HOST", "\"https://www.wanandroid.com/\"")
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+//        debug {
+//            buildConfigField "boolean", "LOG_DEBUG", "true"
+//            buildConfigField "boolean", "USE_CANARY", "true"
+//            buildConfigField("String", "API_HOST", "\"https://www.wanandroid.com/\"")
+//        }
+//        release {
+////            buildConfigField "boolean", "LOG_DEBUG", "true"
+////            buildConfigField "boolean", "USE_CANARY", "true"
+////            buildConfigField("String", "API_HOST", "\"https://www.wanandroid.com/\"")
+//            minifyEnabled true
+////            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
         applicationVariants.all { variant ->
             variant.outputs.all {
                 if (variant.name.endsWith("release")) {
-                    outputFileName = "WAndroid-demo${releaseTime()}.apk"
+                    outputFileName = "WAndroid.apk"
                     //outputFileName = "AIJ.apk"
                 }
             }

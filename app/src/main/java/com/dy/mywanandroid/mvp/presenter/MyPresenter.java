@@ -43,11 +43,7 @@ public class MyPresenter extends BasePresenter<MyContract.Model,MyContract.View>
                 .subscribe(new ErrorHandleSubscriber<RankResultt>(mRxErrorHandler) {
                     @Override
                     public void onNext(RankResultt rankResultt) {
-                        if (rankResultt.getErrorCode() == 0){
-                            mRootView.getRanking(rankResultt);
-                        }else {
-                            mRootView.getRanking(null);
-                        }
+                        mRootView.getRanking(rankResultt);
                     }
                 });
     }

@@ -48,11 +48,8 @@ public class MainPresenter extends BasePresenter<MianContract.Model, MianContrac
                 .subscribe(new ErrorHandleSubscriber<MainBlogList>(mErrorHandler) {
                     @Override
                     public void onNext(MainBlogList mainBlogList) {
-                        if (mainBlogList.getErrorCode() == 0) {
-                            mRootView.getBlogList(mainBlogList);
-                        } else {
-                            mRootView.getBlogList(null);
-                        }
+                        System.out.println("main====================="+mainBlogList);
+                        mRootView.getBlogList(mainBlogList);
                     }
                 });
     }
@@ -68,11 +65,8 @@ public class MainPresenter extends BasePresenter<MianContract.Model, MianContrac
                 .subscribe(new ErrorHandleSubscriber<BannerList>(mErrorHandler) {
                     @Override
                     public void onNext(BannerList bannerList) {
-                        if (bannerList.getErrorCode() == 0) {
-                            mRootView.getBanner(bannerList);
-                        } else {
-                            mRootView.getBanner(null);
-                        }
+                        System.out.println("banner====================="+bannerList);
+                        mRootView.getBanner(bannerList);
                     }
                 });
     }
