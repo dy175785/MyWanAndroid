@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
-        android:name="com.haife.android.mcas.base.BaseApplication"
+        android:name=".app.base.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/android"
         android:label="@string/app_name"
@@ -34,19 +34,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".mvp.ui.activity.SplashActivity" android:theme="@style/SqlashTheme">
-
-        </activity>
-        <activity android:name=".mvp.ui.activity.LoginActivity" />
-        <activity android:name=".mvp.ui.activity.RankingActivity" />
-        <activity android:name=".mvp.ui.activity.WebActivity" />
-        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".mvp.ui.activity.LoginActivity" />
+        <activity android:name=".mvp.ui.activity.RankingActivity" />
+        <activity android:name=".mvp.ui.activity.WebActivity"/>
+        <activity android:name=".MainActivity">
+        </activity>
         <meta-data
             android:name="design_width_in_dp"
             android:value="375" />

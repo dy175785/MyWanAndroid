@@ -45,8 +45,12 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
-    <WebView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/wv_web"/>
+        android:id="@+id/fl_wb"/>
+<!--    <WebView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:id="@+id/wv_web"/>-->
 </LinearLayout>

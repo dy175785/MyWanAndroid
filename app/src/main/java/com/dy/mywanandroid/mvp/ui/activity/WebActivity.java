@@ -3,6 +3,7 @@ package com.dy.mywanandroid.mvp.ui.activity;
 import android.app.AlertDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -31,6 +33,7 @@ import com.dy.mywanandroid.mvp.http.entity.result.MainBlogList;
 import com.dy.mywanandroid.utils.AppHelper;
 import com.haife.android.mcas.di.component.AppComponent;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,11 +47,14 @@ public class WebActivity extends BaseSupportActivity {
     TextView tvTitleWeb;
     @BindView(R.id.iv_menu_web)
     ImageView ivMenuWeb;
-    @BindView(R.id.wv_web)
-    WebView wvWeb;
+
+    @BindView(R.id.fl_wb)
+    FrameLayout flWb;
     private AlertDialog alertDialog;
     private MainBlogList.DataBean.DatasBean datasBean;
     private CollectionResult.DataBean.DatasBean collBean;
+    private WebView wvWeb;
+    private QMUITipDialog dialog;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
 
@@ -63,6 +69,24 @@ public class WebActivity extends BaseSupportActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
         QMUIStatusBarHelper.translucent(this);
         QMUIStatusBarHelper.setStatusBarDarkMode(this);
+        QMUITipDialog.Builder builder = new QMUITipDialog.Builder(mContext);
+        dialog = builder.setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING).setTipWord("加载中").create();
+        dialog.show();
+        // TODO: 2020/10/29 设置弹窗返回键失效 
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        flWb.setVisibility(View.GONE);
+        wvWeb = new WebView(this);
+        flWb.addView(wvWeb);
+        wvWeb.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+        flWb.setLayerType(View.LAYER_TYPE_HARDWARE,null);
         ivBackWeb.setOnClickListener(v -> finish());
         wvWeb.setWebViewClient(new WebViewClient() {
             @Override
@@ -76,6 +100,18 @@ public class WebActivity extends BaseSupportActivity {
                 return true;
             }
         });
+        // TODO: 2020/10/29 加载进度
+        wvWeb.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100){
+                    dialog.hide();
+                    flWb.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         WebSettings webSettings = wvWeb.getSettings();
         // 让WebView能够执行javaScript
         webSettings.setJavaScriptEnabled(true);
@@ -98,11 +134,11 @@ public class WebActivity extends BaseSupportActivity {
         webSettings.setDisplayZoomControls(true);
         // 设置默认字体大小
         if (getIntent().getSerializableExtra(AppHelper.MAIN_WEB_DATA) != null) {
-            if (getIntent().getStringExtra(AppHelper.MAIN_WEB_TYPE)!=null){
+            if (getIntent().getStringExtra(AppHelper.MAIN_WEB_TYPE) != null) {
                 collBean = (CollectionResult.DataBean.DatasBean) getIntent().getSerializableExtra(AppHelper.MAIN_WEB_DATA);
                 tvTitleWeb.setText(collBean.getTitle());
                 wvWeb.loadUrl(collBean.getLink());
-            }else {
+            } else {
                 datasBean = (MainBlogList.DataBean.DatasBean) getIntent().getSerializableExtra(AppHelper.MAIN_WEB_DATA);
                 tvTitleWeb.setText(datasBean.getTitle());
                 wvWeb.loadUrl(datasBean.getLink());
@@ -190,16 +226,16 @@ public class WebActivity extends BaseSupportActivity {
             if (alertDialog != null) {
                 alertDialog.dismiss();
             }
-            if (datasBean == null){
+            if (datasBean == null) {
                 return;
             }
             switch (v.getId()) {
                 case R.id.fl_dialog_copy_link:
-                    if (datasBean!=null){
+                    if (datasBean != null) {
                         ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                         cm.setText(datasBean.getLink());
                         ToastUtils.showLong("复制链接成功");
-                    }else {
+                    } else {
                         ToastUtils.showLong("复制链接失败");
                     }
                     break;
@@ -221,4 +257,12 @@ public class WebActivity extends BaseSupportActivity {
             }
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        wvWeb = null;
+    }
+
+
 }
