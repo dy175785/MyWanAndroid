@@ -85,7 +85,7 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mainTopBar.setTitle("首页").setTextColor(Color.WHITE);
+//        mainTopBar.setTitle("首页").setTextColor(Color.WHITE);
         //mainTopBar.addRightTextButton("搜索",R.id.main_top_bar).setTextColor(Color.WHITE);
         adapter = new MainRvAdapter(R.layout.main_item_blog_list, blogList);
 
@@ -213,7 +213,6 @@ public class MainFragment extends BaseSupportFragment<MainPresenter> implements 
     public void getColl(CollectionResult result) {
         try {
             mPresenter.getBlog(page);
-            System.out.println("================="+result);
             if (result.getErrorCode() == 0){
                 if (page == 0) {
                     resultList.clear();

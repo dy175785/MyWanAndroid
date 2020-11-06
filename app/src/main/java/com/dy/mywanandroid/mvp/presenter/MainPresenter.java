@@ -48,7 +48,6 @@ public class MainPresenter extends BasePresenter<MianContract.Model, MianContrac
                 .subscribe(new ErrorHandleSubscriber<MainBlogList>(mErrorHandler) {
                     @Override
                     public void onNext(MainBlogList mainBlogList) {
-                        System.out.println("main====================="+mainBlogList);
                         mRootView.getBlogList(mainBlogList);
                     }
                 });
@@ -65,7 +64,6 @@ public class MainPresenter extends BasePresenter<MianContract.Model, MianContrac
                 .subscribe(new ErrorHandleSubscriber<BannerList>(mErrorHandler) {
                     @Override
                     public void onNext(BannerList bannerList) {
-                        System.out.println("banner====================="+bannerList);
                         mRootView.getBanner(bannerList);
                     }
                 });

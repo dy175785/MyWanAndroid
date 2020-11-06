@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#03DAC5</color>
-    <color name="colorPrimaryDark">#03DAC5</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#ffffff</color>
     <color name="common_pressed_bg_color">#BEBEBE</color>
     <color name="app_color_edit_hint">#FFCCCCCC</color>
     <color name="app_color_view_line">#FFEEEEEE</color>
